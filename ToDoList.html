@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>ReactDemo</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root">
+</div>
+<script type="text/babel">
+    function List(props) {
+        const lists = props.todolist;
+        const listItems = lists.map((list,index) =>
+            <li key={index}>
+                {list}
+            </li>
+
+        );
+
+        return (
+          <ol>{listItems}</ol>
+        );
+    }
+    
+    class ToDoList extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                value : '',
+                todolist : []
+            }
+
+            this.handleSubmit = this.handleSubmit.bind(this);
+            this.handleChange = this.handleChange.bind(this);
+            this.handleClick = this.handleClick.bind(this);
+        }
+
+        handleSubmit(event) {
+            this.state.todolist.push(this.state.value);
+            this.setState({value: ''});
+            event.preventDefault();
+        }
+
+        handleChange(event) {
+            this.setState({value: event.target.value});
+        }
+
+        handleClick(event) {
+            this.setState({value:''});
+            this.state.todolist.push(this.state.value);
+        }
+
+        render() {
+            return (
+                <fieldset>
+                    <legend>ToDo:</legend>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    <button onClick={this.handleClick}>Add</button>
+                    <List todolist={this.state.todolist}/>
+                </fieldset>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <ToDoList />,
+        document.getElementById('root')
+    );
+</script>
+</body>
+</html>

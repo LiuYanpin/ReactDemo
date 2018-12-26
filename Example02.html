@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <title>Test</title>
+</head>
+<body>
+<div id="container"></div>
+
+<script type="text/babel">
+var InputState = React.create({
+    getInitialState: function () {
+        return {enabled: false};
+    },
+    handleClick: function (event) {
+        this.setState({enabled: !this.state.enable});
+    },
+    render: function () {
+        return (
+            <p>
+                <input type="text" disabled={this.state.enable}/>
+                <button onClick={this.handleClick}>Change State</button>
+            </p>
+        );
+    }
+});
+React.render(
+    <InputState />,
+    document.getElementById('container')
+);
+
+</script>
+</body>
+</html>
